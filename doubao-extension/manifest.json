@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "豆包会话批量勾选助手",
+  "version": "1.0.0",
+  "description": "进入豆包会话选择模式后自动勾选全部；可点右下角角标或扩展图标按钮手动触发。",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["https://*.doubao.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://*.doubao.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "豆包批量勾选"
+  }
+}

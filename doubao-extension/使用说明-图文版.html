@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>豆包会话批量勾选助手 · 图文使用说明</title>
+<style>
+  :root{
+    --green:#07c160; --green-d:#06a050; --blue:#3b6cff; --ink:#1f2430;
+    --muted:#6b7280; --line:#e6e8ef; --bg:#f5f7fb; --card:#ffffff;
+    --warn:#ff9800; --warn-bg:#fff5e6; --tip-bg:#eef4ff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",Segoe UI,Roboto,sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.7;}
+  .hero{background:linear-gradient(135deg,#0b1f4d 0%,#15367f 55%,#07c160 140%);color:#fff;padding:36px 20px 30px;}
+  .hero h1{margin:0 0 8px;font-size:26px;font-weight:800;letter-spacing:.5px}
+  .hero p{margin:0;opacity:.9;font-size:15px;max-width:760px}
+  .wrap{max-width:920px;margin:0 auto;padding:22px 18px 60px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin:18px 0;
+    box-shadow:0 1px 3px rgba(20,30,60,.04)}
+  .card h2{margin:0 0 14px;font-size:19px;display:flex;align-items:center;gap:10px}
+  .tag{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:var(--green);
+    border-radius:6px;padding:2px 9px;vertical-align:middle}
+  .tag.blue{background:var(--blue)} .tag.warn{background:var(--warn)}
+  .lead{font-size:14px;color:var(--muted);margin:-4px 0 14px}
+  /* steps */
+  .step{display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px dashed var(--line)}
+  .step:last-child{border-bottom:0}
+  .num{flex:0 0 38px;height:38px;border-radius:50%;background:var(--green);color:#fff;font-weight:800;
+    display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 2px 6px rgba(7,193,96,.35)}
+  .step .body{flex:1}
+  .step .body b{font-size:15px}
+  .step .body p{margin:4px 0 0;color:var(--muted);font-size:13.5px}
+  .mock{margin-top:12px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+  .mock .bar{background:#eef1f8;padding:8px 10px;display:flex;align-items:center;gap:8px;font-size:12px;color:#444}
+  .mock .dot{width:10px;height:10px;border-radius:50%}
+  .mock .addr{background:#fff;border:1px solid #d6dbe8;border-radius:6px;padding:5px 10px;flex:1;color:#333;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+  .mock .pane{padding:14px}
+  .toggle{display:inline-flex;align-items:center;gap:8px;font-size:13px}
+  .sw{width:42px;height:24px;border-radius:14px;background:var(--green);position:relative}
+  .sw::after{content:"";position:absolute;top:2px;right:2px;width:20px;height:20px;border-radius:50%;background:#fff}
+  .btn{display:inline-block;background:var(--blue);color:#fff;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600}
+  .btn.green{background:var(--green)}
+  .extcard{border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;align-items:center;gap:12px}
+  .extlogo{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#07c160,#0b6);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px}
+  .pill{margin-left:auto;font-size:12px;color:var(--green);border:1px solid var(--green);border-radius:20px;padding:3px 10px}
+  .badge{position:fixed;right:14px;bottom:14px;background:var(--green);color:#fff;border-radius:10px;padding:8px 12px;font-size:13px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+  .phone{position:relative;border:1px solid var(--line);border-radius:12px;height:200px;background:linear-gradient(180deg,#fafbff,#eef2fb);overflow:hidden}
+  .phone .row{margin:12px;border:1px solid #dfe4f2;border-radius:8px;background:#fff;padding:10px;display:flex;align-items:center;gap:10px}
+  .ck{width:20px;height:20px;border-radius:50%;border:2px solid #bbb}
+  .ck.on{background:var(--green);border-color:var(--green)}
+  /* table */
+  table{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:center}
+  th{background:#f2f5fc;font-weight:700}
+  td.l{text-align:left}
+  .ok{color:var(--green);font-weight:700} .bad{color:var(--warn);font-weight:700}
+  .note{background:var(--tip-bg);border-left:4px solid var(--blue);padding:12px 14px;border-radius:8px;font-size:13.5px;margin-top:12px}
+  .note.warn{background:var(--warn-bg);border-left-color:var(--warn)}
+  .faq{display:grid;grid-template-columns:1fr;gap:10px}
+  .faq .q{font-weight:700;color:var(--ink)}
+  .faq .a{color:var(--muted);font-size:13.5px;margin-top:2px}
+  footer{text-align:center;color:var(--muted);font-size:12.5px;padding:18px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr}.hero h1{font-size:22px}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>豆包会话批量勾选助手</h1>
+  <p>进入豆包会话「选择模式」后自动勾选全部会话，长列表自动滚动加载；删除仍由你手动完成。本页为图文安装与使用说明，跟着图走一遍即可。</p>
+</div>
+
+<div class="wrap">
+
+  <!-- 简介 -->
+  <div class="card">
+    <h2><span class="tag">简介</span> 这是什么 / 为什么用扩展</h2>
+    <p class="lead">豆包页面用了 <code>nonce + strict-dynamic</code> 的严格 CSP，会把油猴注入的脚本拦掉；而浏览器扩展的内容脚本由浏览器注入、跑在隔离环境，<b>不受页面 CSP 限制</b>，所以能稳定生效。</p>
+    <div class="note">✅ 本扩展仅在本地运行，不上传任何数据；删除动作需你本人手动确认，避免误删。</div>
+  </div>
+
+  <!-- 安装步骤 -->
+  <div class="card">
+    <h2><span class="tag blue">安装</span> 安装步骤（Edge，一次性）</h2>
+
+    <div class="step">
+      <div class="num">1</div>
+      <div class="body">
+        <b>打开扩展管理页</b>
+        <p>打开 Edge，在地址栏输入 <b>edge://extensions</b> 并回车。</p>
+        <div class="mock">
+          <div class="bar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><span class="addr">edge://extensions</span></div>
+          <div class="pane" style="color:#555;font-size:13px">扩展管理 · 已安装扩展列表</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">2</div>
+      <div class="body">
+        <b>开启「开发人员模式」</b>
+        <p>打开页面左上角的「开发人员模式」开关（打开后变为绿色）。</p>
+        <div class="mock">
+          <div class="pane"><span class="toggle"><span class="sw"></span> 开发人员模式：已开启</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">3</div>
+      <div class="body">
+        <b>加载解压缩的扩展</b>
+        <p>点击「加载解压缩的扩展」，选择本文件夹（即包含 <code>manifest.json</code> 的 <b>doubao-extension</b> 文件夹）。</p>
+        <div class="mock">
+          <div class="pane"><span class="btn">加载解压缩的扩展</span> &nbsp; <span class="btn green">打包扩展</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">4</div>
+      <div class="body">
+        <b>确认安装完成</b>
+        <p>列表中出现「豆包会话批量勾选助手」且开关是开的，即安装完成。</p>
+        <div class="mock">
+          <div class="pane">
+            <div class="extcard">
+              <div class="extlogo">豆</div>
+              <div><div style="font-weight:700">豆包会话批量勾选助手</div><div style="font-size:12px;color:#888">已启用 · 1.0.0</div></div>
+              <span class="pill">已开启</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note warn">⚠️ 如果之后移动或改名了这个文件夹，扩展会失效，需在扩展卡片上点「重新加载」重新指向文件夹。</div>
+  </div>
+
+  <!-- 使用方法 -->
+  <div class="card">
+    <h2><span class="tag">使用</span> 使用方法（之后每次）</h2>
+    <div class="step">
+      <div class="num">1</div>
+      <div class="body"><b>打开豆包会话页</b><p>访问 <code>https://www.doubao.com/chat/...</code></p></div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="body"><b>进入「选择模式」</b><p>在会话里点出多选/选择，页面出现圆圈勾选框。</p></div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="body">
+        <b>自动勾选 + 滚动加载</b>
+        <p>扩展自动勾选全部，长列表自动向下滚加载并勾完；右下角出现绿色角标「豆包自动勾选：点我全选」。</p>
+        <div class="mock">
+          <div class="pane">
+            <div class="phone">
+              <div class="row"><span class="ck on"></span> 会话记录 A</div>
+              <div class="row"><span class="ck on"></span> 会话记录 B</div>
+              <div class="row"><span class="ck on"></span> 会话记录 C</div>
+              <div class="badge">豆包自动勾选：点我全选</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div class="body"><b>手动删除</b><p>全部勾选好后，你手动点「删除」即可。</p></div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div class="body"><b>强制重勾（可选）</b><p>若有漏勾：点右下角绿色角标，或点 Edge 工具栏扩展图标 →「一键勾选豆包会话」按钮重新触发。</p></div>
+    </div>
+  </div>
+
+  <!-- 跨平台 -->
+  <div class="card">
+    <h2><span class="tag blue">跨平台</span> 在哪些浏览器可用</h2>
+    <table>
+      <tr><th>浏览器</th><th>Windows</th><th>macOS</th><th>能否直接加载本文件夹</th></tr>
+      <tr><td class="l"><b>Edge</b></td><td class="ok">✅</td><td class="ok">✅</td><td>都能，步骤完全一致</td></tr>
+      <tr><td class="l"><b>Chrome</b></td><td class="ok">✅</td><td class="ok">✅</td><td>都能（chrome://extensions → 开发者模式 → 加载已解压的扩展）</td></tr>
+      <tr><td class="l"><b>Safari</b></td><td>—</td><td class="bad">⚠️</td><td>不能直接用，需另转为「Safari Web Extension」</td></tr>
+    </table>
+    <div class="note">加载步骤在 Windows / Mac 上完全一样，区别只是文件夹存放位置；「绕过豆包 CSP」是浏览器引擎（Chromium）层面行为，与操作系统无关。</div>
+  </div>
+
+  <!-- 文件说明 -->
+  <div class="card">
+    <h2><span class="tag">文件</span> 本文件夹包含</h2>
+    <table>
+      <tr><th>文件</th><th>作用</th></tr>
+      <tr><td class="l"><code>manifest.json</code></td><td>扩展配置：匹配 *.doubao.com，注入内容脚本 + 弹窗按钮</td></tr>
+      <tr><td class="l"><code>content.js</code></td><td>核心逻辑：勾选框检测、滚动加载、右下角角标、消息监听</td></tr>
+      <tr><td class="l"><code>popup.html</code> / <code>popup.js</code></td><td>扩展图标弹窗的「一键勾选」按钮</td></tr>
+      <tr><td class="l"><code>使用说明.md</code></td><td>纯文字版使用说明</td></tr>
+      <tr><td class="l"><code>使用说明-图文版.html</code></td><td>本图文说明（双击在浏览器打开）</td></tr>
+    </table>
+  </div>
+
+  <!-- 常见问题 -->
+  <div class="card">
+    <h2><span class="tag warn">排查</span> 常见问题</h2>
+    <div class="faq">
+      <div><div class="q">Q：右下角角标没出现 / 没自动勾选？</div><div class="a">A：① edge://extensions 里确认「开发人员模式」已开、本扩展开关是开的；② 确认加载的是正确的 doubao-extension 文件夹；③ 在豆包页面按 F5 刷新一次；④ 按 F12 → Console 看是否有「[豆包助手] 已加载」日志。</div></div>
+      <div><div class="q">Q：勾选不全 / 有漏勾？</div><div class="a">A：点右下角角标或扩展图标按钮重新触发一次即可补勾。</div></div>
+      <div><div class="q">Q：控制台报错？</div><div class="a">A：把 Console 里 [豆包助手] 相关日志或红色报错发人协助排查。</div></div>
+    </div>
+  </div>
+
+  <footer>豆包会话批量勾选助手 · 本地扩展 · 图文使用说明</footer>
+</div>
+</body>
+</html>

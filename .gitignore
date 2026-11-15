@@ -1,0 +1,14 @@
+# 系统 / 编辑器文件
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+
+# 发布用压缩包（不入库）
+*.zip
+*.crx
+*.xpi
+
+# 日志
+*.log
